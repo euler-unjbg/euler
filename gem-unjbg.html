@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEM — Energy & Materials Research Group | UNJBG</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root {
+  --bg0:    #050e1a;
+  --bg1:    #081628;
+  --bg2:    #0c1f36;
+  --sky:    #38bdf8;      /* cyan brillante — Tailwind sky-400 */
+  --sky2:   #7dd3fc;      /* sky-300 para textos secundarios */
+  --white:  #ffffff;
+  --off:    #c8dff0;      /* blanco cálido para cuerpo */
+  --muted:  #7eaecb;      /* secundario legible */
+  --line:   rgba(56,189,248,0.16);
+  --card:   rgba(8,22,40,0.85);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg0);
+  color:var(--off);
+  font-weight:400;
+  line-height:1.75;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+
+/* CANVAS */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+.wrap{position:relative;z-index:1;}
+
+/* ── NAV ────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 64px;
+  border-bottom:1px solid var(--line);
+  background:rgba(5,14,26,0.92);
+  backdrop-filter:blur(20px);
+}
+.nav-brand{
+  display:flex;align-items:center;gap:14px;
+}
+.nav-gem{
+  font-family:'DM Mono',monospace;
+  font-size:1rem;font-weight:400;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--sky);
+}
+.nav-sep{width:1px;height:18px;background:var(--line);}
+.nav-full{
+  font-family:'DM Sans',sans-serif;
+  font-size:0.8rem;font-weight:300;
+  color:var(--off);letter-spacing:0.04em;
+  opacity:.8;
+}
+.nav-links{display:flex;gap:36px;}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;font-weight:300;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);
+  transition:color .18s;
+}
+.nav-links a:hover{color:var(--sky);}
+.nav-loc{
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;font-weight:300;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── HERO ───────────────────────────────────── */
+#hero{
+  min-height:94vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:100px 40px 80px;
+}
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;font-weight:300;
+  letter-spacing:0.36em;text-transform:uppercase;
+  color:var(--sky2);
+  margin-bottom:48px;
+  display:flex;align-items:center;gap:18px;
+}
+.eyebrow::before,.eyebrow::after{
+  content:'';width:56px;height:1px;
+  background:var(--sky);opacity:.4;
+}
+h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3.4rem,8vw,7.2rem);
+  font-weight:400;
+  line-height:1.06;
+  letter-spacing:-0.01em;
+  max-width:13ch;
+  color:var(--white);
+}
+h1 em{
+  font-style:italic;
+  color:var(--sky);
+}
+.hero-lead{
+  margin-top:36px;
+  max-width:58ch;
+  font-size:1.05rem;
+  font-weight:300;
+  line-height:1.85;
+  color:var(--off);
+}
+.hero-lead strong{color:var(--white);font-weight:500;}
+
+/* METRICS */
+.metrics{
+  display:flex;
+  margin-top:68px;
+  border:1px solid var(--line);
+  background:var(--card);
+  backdrop-filter:blur(12px);
+}
+.metric{
+  flex:1;padding:28px 32px;
+  border-right:1px solid var(--line);
+  text-align:left;
+}
+.metric:last-child{border-right:none;}
+.m-val{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;font-weight:400;
+  color:var(--sky);line-height:1;
+}
+.m-lbl{
+  margin-top:6px;
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;font-weight:300;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+hr{border:none;border-top:1px solid var(--line);}
+
+/* ── SECTION ────────────────────────────────── */
+.sec{max-width:1120px;margin:0 auto;padding:96px 56px;width:100%;}
+
+.s-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;font-weight:400;
+  letter-spacing:0.36em;text-transform:uppercase;
+  color:var(--sky);
+  margin-bottom:52px;
+}
+
+.s-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.9rem,3.2vw,2.9rem);
+  font-weight:400;line-height:1.18;
+  color:var(--white);
+  margin-bottom:20px;
+}
+.s-title em{font-style:italic;color:var(--sky);}
+
+.s-body{
+  font-size:0.95rem;font-weight:300;
+  line-height:1.85;color:var(--off);
+  max-width:66ch;
+}
+
+/* ── RESEARCH LINES ─────────────────────────── */
+.lines{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);
+}
+.lcard{
+  background:var(--bg1);
+  padding:44px 36px;
+  transition:background .22s;
+}
+.lcard:hover{background:var(--bg2);}
+.lc-n{
+  font-family:'DM Mono',monospace;
+  font-size:0.58rem;font-weight:300;
+  letter-spacing:0.26em;text-transform:uppercase;
+  color:var(--sky2);opacity:.7;
+  margin-bottom:18px;
+}
+.lc-t{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;font-weight:400;
+  line-height:1.3;margin-bottom:14px;
+  color:var(--white);
+}
+.lc-b{
+  font-size:0.88rem;font-weight:300;
+  line-height:1.8;color:var(--off);
+}
+.lc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;}
+.tag{
+  font-family:'DM Mono',monospace;
+  font-size:0.58rem;font-weight:300;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--sky);
+  border:1px solid rgba(56,189,248,.28);
+  padding:4px 10px;
+}
+
+/* ── ABOUT ──────────────────────────────────── */
+.about-grid{
+  display:grid;grid-template-columns:1.1fr 0.9fr;
+  gap:80px;align-items:start;
+}
+.info-table{display:flex;flex-direction:column;}
+.ir{
+  display:grid;grid-template-columns:0.9fr 1.4fr;
+  gap:12px;padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+.ir:last-child{border-bottom:none;}
+.ir-k{
+  font-family:'DM Mono',monospace;
+  font-size:0.58rem;font-weight:300;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--sky2);padding-top:3px;
+}
+.ir-v{font-size:0.88rem;font-weight:400;color:var(--off);line-height:1.6;}
+
+.obj-list{display:flex;flex-direction:column;margin-top:44px;}
+.obj{
+  display:flex;gap:18px;align-items:flex-start;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.obj:last-child{border-bottom:none;}
+.obj-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--sky);flex-shrink:0;
+  margin-top:9px;
+}
+.obj-t{font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off);}
+.obj-t strong{color:var(--white);font-weight:500;}
+
+/* ── TEAM ───────────────────────────────────── */
+.team-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);
+}
+.member{
+  background:var(--bg1);
+  padding:36px 28px;
+  transition:background .22s;
+}
+.member:hover{background:var(--bg2);}
+.mb-role{
+  font-family:'DM Mono',monospace;
+  font-size:0.58rem;font-weight:300;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:12px;
+}
+.mb-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;font-weight:400;
+  line-height:1.3;margin-bottom:8px;
+  color:var(--white);
+}
+.mb-dept{font-size:0.82rem;font-weight:300;color:var(--off);line-height:1.6;}
+.mb-spec{
+  margin-top:16px;
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;font-weight:300;
+  letter-spacing:0.1em;color:var(--muted);
+}
+
+/* ── PUBLICATIONS ───────────────────────────── */
+.pub-list{display:flex;flex-direction:column;}
+.pub{
+  display:grid;grid-template-columns:64px 1fr;
+  gap:28px;padding:32px 0;
+  border-bottom:1px solid var(--line);
+}
+.pub:first-child{padding-top:0;}
+.pub:last-child{border-bottom:none;}
+.pub-yr{
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--sky);padding-top:4px;
+}
+.pub-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;font-weight:400;
+  line-height:1.4;margin-bottom:8px;
+  color:var(--white);
+}
+.pub-authors{font-size:0.82rem;font-weight:300;color:var(--off);margin-bottom:6px;}
+.pub-journal{
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;font-weight:300;
+  letter-spacing:0.1em;color:var(--sky2);
+}
+
+/* ── FOOTER ─────────────────────────────────── */
+footer{border-top:1px solid var(--line);background:rgba(5,14,26,.97);}
+.footer-in{
+  max-width:1120px;margin:0 auto;
+  padding:64px 56px 52px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:40px;text-align:center;
+}
+.f-gem{
+  font-family:'DM Mono',monospace;
+  font-size:0.78rem;font-weight:400;
+  letter-spacing:0.38em;text-transform:uppercase;
+  color:var(--sky);
+}
+.f-name{
+  font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:300;
+  color:var(--off);margin-top:8px;letter-spacing:0.04em;
+}
+.f-mail{
+  font-family:'DM Mono',monospace;
+  font-size:0.74rem;font-weight:300;
+  letter-spacing:0.1em;
+  color:var(--sky2);margin-top:10px;
+}
+.socials{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.sl{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 22px;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;font-weight:300;
+  letter-spacing:0.14em;text-transform:uppercase;
+  transition:all .2s;
+}
+.sl svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
+.sl:hover{border-color:var(--sky);color:var(--sky);background:rgba(56,189,248,.07);}
+.f-copy{font-size:0.72rem;font-weight:300;color:var(--muted);}
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media(max-width:960px){
+  nav{padding:18px 24px;}
+  .nav-links,.nav-loc{display:none;}
+  .sec{padding:72px 28px;}
+  .lines{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;gap:48px;}
+  .team-grid{grid-template-columns:1fr 1fr;}
+  .metrics{flex-direction:column;}
+  .metric{border-right:none;border-bottom:1px solid var(--line);}
+  .metric:last-child{border-bottom:none;}
+  .footer-in{padding:48px 24px 40px;}
+  .sl span{display:none;}
+  .sl{padding:11px 14px;}
+}
+@media(max-width:560px){.team-grid{grid-template-columns:1fr;}}
+@media(prefers-reduced-motion:reduce){#bg{display:none;}}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-gem">GEM</span>
+    <div class="nav-sep"></div>
+    <span class="nav-full">Energy &amp; Materials Research Group</span>
+  </div>
+  <div class="nav-links">
+    <a href="#research">Research</a>
+    <a href="#about">About</a>
+    <a href="#members">Team</a>
+    <a href="#publications">Publications</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-loc">UNJBG · Tacna, Peru</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">Faculty of Sciences · UNJBG · Founded 2024</div>
+  <h1>Energy &amp; <em>Materials</em> Research Group</h1>
+  <p class="hero-lead">
+    We combine <strong>ab initio simulation (DFT)</strong>, machine-learning potentials,
+    and laboratory synthesis to design new materials for
+    <strong>energy conversion and solid-state storage</strong>.
+  </p>
+  <div class="metrics">
+    <div class="metric">
+      <div class="m-val">DFT</div>
+      <div class="m-lbl">Ab initio · First principles</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">HPC</div>
+      <div class="m-lbl">High-performance computing</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">3</div>
+      <div class="m-lbl">Active research lines</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">SDG 7</div>
+      <div class="m-lbl">Affordable clean energy</div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- RESEARCH -->
+<section id="research">
+<div class="sec">
+  <div class="s-label">Research lines</div>
+  <div class="lines">
+    <div class="lcard">
+      <div class="lc-n">Line 01</div>
+      <div class="lc-t">Materials Characterization</div>
+      <p class="lc-b">Structural, morphological, optical, and electrical characterization using XRD, SEM-EDS, UV-Vis, impedance spectroscopy, and thermoelectric measurement systems.</p>
+      <div class="lc-tags">
+        <span class="tag">XRD</span><span class="tag">SEM-EDS</span>
+        <span class="tag">Impedance</span><span class="tag">Seebeck</span>
+      </div>
+    </div>
+    <div class="lcard">
+      <div class="lc-n">Line 02</div>
+      <div class="lc-t">Nanotechnology &amp; Materials Science</div>
+      <p class="lc-b">Chemical synthesis of MXenes, 2D materials, and nanostructured oxides for batteries, supercapacitors, and photocatalysis applications.</p>
+      <div class="lc-tags">
+        <span class="tag">MXenes</span><span class="tag">2D Materials</span>
+        <span class="tag">Nanooxides</span><span class="tag">Synthesis</span>
+      </div>
+    </div>
+    <div class="lcard">
+      <div class="lc-n">Line 03</div>
+      <div class="lc-t">Computational Physics &amp; Materials Modeling</div>
+      <p class="lc-b">First-principles DFT and ML interatomic potentials for electronic structure, lattice dynamics, and transport in thermoelectrics and solid electrolytes such as LiNbO₃.</p>
+      <div class="lc-tags">
+        <span class="tag">DFT</span><span class="tag">VASP</span>
+        <span class="tag">ML-IAP</span><span class="tag">LAMMPS</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg1);">
+<div class="sec">
+  <div class="s-label">About the group</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="s-title">Theory meets <em>experiment</em></h2>
+      <p class="s-body">
+        GEM was founded in 2024 at Universidad Nacional Jorge Basadre Grohmann.
+        Our research loop closes from DFT prediction to laboratory synthesis,
+        characterization, and back — theory-guided design for real energy applications.
+        Funded by Canon Minero through UNJBG's competitive research program.
+      </p>
+      <div class="s-label" style="margin-top:52px;margin-bottom:0;">Key objectives</div>
+      <div class="obj-list">
+        <div class="obj"><div class="obj-dot"></div><p class="obj-t">Develop new <strong>nanomaterials</strong> with technological potential for energy conversion and storage.</p></div>
+        <div class="obj"><div class="obj-dot"></div><p class="obj-t">Synthesize and characterize compounds using advanced spectroscopic and microscopic techniques.</p></div>
+        <div class="obj"><div class="obj-dot"></div><p class="obj-t">Implement <strong>HPC simulations</strong> to study structural, electronic, and transport properties from first principles.</p></div>
+        <div class="obj"><div class="obj-dot"></div><p class="obj-t">Optimize thermoelectric ZT and ionic conductivity in solid electrolytes via computational screening.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="s-label" style="margin-bottom:24px;">Group identity</div>
+      <div class="info-table">
+        <div class="ir"><span class="ir-k">Full name</span><span class="ir-v">Grupo de Investigación Energía y Materiales (GEM)</span></div>
+        <div class="ir"><span class="ir-k">Institution</span><span class="ir-v">Universidad Nacional Jorge Basadre Grohmann</span></div>
+        <div class="ir"><span class="ir-k">Faculty</span><span class="ir-v">Faculty of Sciences — Dept. of Physics</span></div>
+        <div class="ir"><span class="ir-k">Principal Investigator</span><span class="ir-v">Dr. Efracio Mamani Flores</span></div>
+        <div class="ir"><span class="ir-k">Contact</span><span class="ir-v">emamanif@unjbg.edu.pe</span></div>
+        <div class="ir"><span class="ir-k">Founded</span><span class="ir-v">April 25, 2024</span></div>
+        <div class="ir"><span class="ir-k">Registry</span><span class="ir-v">Res. Vicerrectoral N° 038-2024-VIIN</span></div>
+        <div class="ir"><span class="ir-k">Funding</span><span class="ir-v">Canon Minero · UNJBG Competitive Research</span></div>
+        <div class="ir"><span class="ir-k">Knowledge area</span><span class="ir-v">Solid State Physics · Condensed Matter</span></div>
+        <div class="ir"><span class="ir-k">Research type</span><span class="ir-v">Basic &amp; Applied — Experimental + Computational</span></div>
+        <div class="ir"><span class="ir-k">SDG alignment</span><span class="ir-v">SDG 7 — Affordable and Clean Energy</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr>
+
+<!-- TEAM -->
+<section id="members">
+<div class="sec">
+  <div class="s-label">Research team</div>
+  <div class="team-grid">
+    <div class="member">
+      <div class="mb-role">Principal Investigator</div>
+      <div class="mb-name">Dr. Efracio Mamani Flores</div>
+      <div class="mb-dept">Academic Dept. of Physics<br>Faculty of Sciences, UNJBG</div>
+      <div class="mb-spec">DFT · Thermoelectrics · Solid-State Physics</div>
+    </div>
+    <div class="member">
+      <div class="mb-role">Co-Investigator</div>
+      <div class="mb-name">To be announced</div>
+      <div class="mb-dept">Academic Dept. of Physics<br>Faculty of Sciences, UNJBG</div>
+      <div class="mb-spec">Materials Characterization · XRD</div>
+    </div>
+    <div class="member">
+      <div class="mb-role">Graduate Researcher</div>
+      <div class="mb-name">To be announced</div>
+      <div class="mb-dept">Graduate Program in Physics<br>UNJBG</div>
+      <div class="mb-spec">ML Potentials · LAMMPS</div>
+    </div>
+    <div class="member">
+      <div class="mb-role">Undergraduate Researcher</div>
+      <div class="mb-name">To be announced</div>
+      <div class="mb-dept">Physics · Faculty of Sciences<br>UNJBG</div>
+      <div class="mb-spec">MXenes Synthesis · Nanotechnology</div>
+    </div>
+  </div>
+  <p style="margin-top:18px;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">
+    Roster updated as members are confirmed.
+  </p>
+</div>
+</section>
+
+<hr>
+
+<!-- PUBLICATIONS -->
+<section id="publications" style="background:var(--bg1);">
+<div class="sec">
+  <div class="s-label">Scientific output</div>
+  <h2 class="s-title">Publications &amp; Projects</h2>
+  <p class="s-body" style="margin-bottom:52px;">Active research project funded by Canon Minero. Representative outputs and works in progress.</p>
+  <div class="pub-list">
+    <div class="pub">
+      <div class="pub-yr">2025</div>
+      <div>
+        <div class="pub-title">Development of New Thermoelectric Materials for Energy Conversion: A Theoretical and Experimental Approach</div>
+        <div class="pub-authors">Mamani Flores, E. et al.</div>
+        <div class="pub-journal">Canon Minero Research Project · UNJBG · In progress</div>
+      </div>
+    </div>
+    <div class="pub">
+      <div class="pub-yr">—</div>
+      <div>
+        <div class="pub-title">Electronic Structure and Transport Properties of LiNbO₃ via Density Functional Theory</div>
+        <div class="pub-authors">GEM Research Group</div>
+        <div class="pub-journal">Manuscript in preparation</div>
+      </div>
+    </div>
+    <div class="pub">
+      <div class="pub-yr">—</div>
+      <div>
+        <div class="pub-title">Machine-Learning Interatomic Potentials for Solid-State Electrolytes: Benchmarking against DFT</div>
+        <div class="pub-authors">GEM Research Group</div>
+        <div class="pub-journal">Manuscript in preparation</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr>
+
+<!-- FOOTER -->
+<footer id="contact">
+<div class="footer-in">
+  <div>
+    <div class="f-gem">GEM</div>
+    <div class="f-name">Energy &amp; Materials Research Group · UNJBG</div>
+    <div class="f-mail">emamanif@unjbg.edu.pe</div>
+  </div>
+  <div class="socials">
+    <a class="sl" href="https://facebook.com/gem.unjbg" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+      <span>Facebook</span>
+    </a>
+    <a class="sl" href="https://instagram.com/gem.unjbg" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465a4.9 4.9 0 0 1 1.772 1.153 4.9 4.9 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.218 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.218-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.247-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.218-1.79.465-2.428a4.9 4.9 0 0 1 1.153-1.772A4.9 4.9 0 0 1 5.45 2.525c.637-.247 1.363-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.987.01-4.04.058-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.567.684-.748 1.15-.137.353-.3.882-.344 1.857-.048 1.054-.058 1.37-.058 4.041s.01 2.987.058 4.04c.045.976.207 1.505.344 1.858.181.466.398.8.748 1.15.35.35.684.567 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058s2.987-.01 4.04-.058c.976-.045 1.505-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.567-.684.748-1.15.137-.353.3-.882.344-1.857.048-1.054.058-1.37.058-4.041s-.01-2.987-.058-4.04c-.045-.976-.207-1.505-.344-1.858a3.1 3.1 0 0 0-.748-1.15 3.1 3.1 0 0 0-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.054-.048-1.37-.058-4.041-.058zm0 3.064a5.134 5.134 0 1 1 0 10.268 5.134 5.134 0 0 1 0-10.268zm0 1.802a3.332 3.332 0 1 0 0 6.664 3.332 3.332 0 0 0 0-6.664zm6.538-1.992a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+      <span>Instagram</span>
+    </a>
+    <a class="sl" href="https://x.com/gem_unjbg" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>X / Twitter</span>
+    </a>
+    <a class="sl" href="https://wa.me/51999999999" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.149.347-.347.521-.521.173-.198.297-.347.446-.595.149-.297.025-.521-.025-.67-.05-.149-.694-1.676-.93-2.296-.198-.495-.405-.43-.595-.435h-.546c-.198 0-.521.074-.793.372-.273.297-1.044 1.022-1.044 2.487 0 1.464 1.069 2.875 1.218 3.075.149.198 2.066 3.165 5.005 4.31 2.94 1.146 2.94.763 3.47.717.531-.05 1.758-.717 2.005-1.413.248-.694.248-1.29.173-1.414-.074-.124-.297-.198-.594-.347zm-5.421 7.398h-.004a9.87 9.87 0 0 1-5.031-1.378l-.36-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.508-5.245C2.17 6.252 6.532 1.89 12.06 1.89c2.628 0 5.097 1.024 6.95 2.879a9.78 9.78 0 0 1 2.876 6.947c-.001 5.529-4.494 10.064-9.835 10.064zm8.413-18.484C18.24 1.066 15.224 0 12.052 0 5.495 0 .163 5.335.165 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.9 11.9 0 0 0 5.741 1.464h.005c6.554 0 11.89-5.336 11.892-11.893a11.82 11.82 0 0 0-3.483-8.42z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+    <a class="sl" href="mailto:emamanif@unjbg.edu.pe">
+      <svg viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm19.385 2.077-8.46 5.638a2 2 0 0 1-2.222 0L2.243 6.077A1 1 0 0 0 2 7v11h20V7a1 1 0 0 0-.615-.923zM4.434 5l7.566 5.044L19.566 5z"/></svg>
+      <span>Email</span>
+    </a>
+  </div>
+  <div class="f-copy">© 2025 GEM · Universidad Nacional Jorge Basadre Grohmann · Tacna, Peru · Res. Vicerrectoral N° 038-2024-VIIN</div>
+</div>
+</footer>
+
+</div>
+
+<script>
+const cv=document.getElementById('bg');
+const cx=cv.getContext('2d');
+let W,H,pts;
+const N=40, C=[56,189,248];
+
+function resize(){
+  W=cv.width=window.innerWidth;
+  H=cv.height=window.innerHeight;
+  pts=Array.from({length:N},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,
+    r:.8+Math.random()*1.2,ph:Math.random()*Math.PI*2
+  }));
+}
+function draw(t){
+  cx.clearRect(0,0,W,H);
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+  });
+  for(let i=0;i<pts.length;i++)
+    for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<155){
+        cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
+        cx.strokeStyle=`rgba(${C},${ (1-d/155)*.10 })`;
+        cx.lineWidth=1;cx.stroke();
+      }
+    }
+  pts.forEach(p=>{
+    const pulse=.5+.5*Math.sin(t*.0007+p.ph);
+    cx.beginPath();cx.arc(p.x,p.y,p.r+pulse,0,Math.PI*2);
+    cx.fillStyle=`rgba(${C},${ .2+.35*pulse })`;cx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+resize();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

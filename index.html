@@ -2,632 +2,689 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>EULER — Computational Materials & Energy Research Group | UNJBG</title>
+<meta name="description" content="EULER is a research group at UNJBG focused on thermoelectrics, DFT, ML-IAP, and nanomaterials for sustainable energy. Led by Dr. Efracio Mamani Flores.">
+<meta property="og:title" content="EULER — GEM Research Group · UNJBG">
+<meta property="og:description" content="First-principles simulation, ML materials discovery, and experimental synthesis for sustainable energy.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://euler-unjbg.github.io/euler/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%23040c18'/><text y='46' x='5' font-family='Georgia' font-size='36' font-weight='bold' fill='%2338bdf8'>G</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap');
-
-:root {
-  --bg0:  #040c18;
-  --bg1:  #071422;
-  --bg2:  #0b1c30;
-  --nav:  #080f1c;
-  --sky:  #38bdf8;
-  --sky2: #93d4fb;
-  --w:    #ffffff;
-  --off:  #cce2f5;
-  --dim:  #6b9ab8;
-  --line: rgba(56,189,248,0.14);
+:root{
+  --bg0:#040c18;--bg1:#071422;--bg2:#0b1c30;
+  --nav:#2b3138;
+  --sky:#38bdf8;--sky2:#93d4fb;
+  --w:#ffffff;--off:#cce2f5;--dim:#6b9ab8;
+  --line:rgba(56,189,248,0.14);
+  --nav-h:72px;
 }
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 html,body{height:100%;}
 body{
   font-family:'DM Sans',sans-serif;
-  background:var(--bg0);
-  color:var(--off);
-  font-size:19px;
-  font-weight:400;
-  line-height:1.75;
-  overflow-x:hidden;
-  display:flex;
-  flex-direction:column;
+  background:var(--bg0);color:var(--off);
+  font-size:18px;font-weight:400;line-height:1.8;
+  overflow-x:hidden;display:flex;flex-direction:column;
 }
 a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
-
-/* ══ LAYOUT ══ */
-.shell{
-  position:relative;z-index:1;
-  display:flex;flex-direction:column;
-  min-height:100vh;
-}
-
-/* ══ NAV ══ */
-nav{
-  position:sticky;
-  top:0;
-  z-index:200;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  height:88px;
-  padding:0 72px;
-
-  background:#2b3138; /* gris institucional */
-  border-bottom:1px solid rgba(255,255,255,.10);
-
-  box-shadow:0 6px 24px rgba(0,0,0,.35);
-}
-
-/* Brand */
-.brand{
-   display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-width:320px;
-    text-align:center;
-    line-height:1.15;
-}
-
-.brand-gem{
-  font-family:'DM Sans',sans-serif;
-  font-size:2rem;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#ffffff;
-}
-
-.brand-sub{
-  margin-top:4px;
-  font-size:0.75rem;
-  font-weight:500;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#cdd7df;
-}
-
-/* Menu */
-.nav-links{
-  display:flex;
-  gap:52px;
-}
-
-.nav-links a{
-  font-family:'DM Sans',sans-serif;
-
-  font-size:0.95rem;
-
-  font-weight:600;
-
-  letter-spacing:0.12em;
-
-  text-transform:uppercase;
-
-  color:#ffffff;
-
-  padding:6px 0;
-
-  border-bottom:3px solid transparent;
-
-  transition:all .25s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-  color:var(--sky);
-
-  border-bottom-color:var(--sky);
-}
-
-/* ══ CONTENT AREA (grows) ══ */
+.shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
 .content{flex:1;}
 
-/* ══ SECTIONS — all hidden by default ══ */
-.page{display:none;animation:fadeIn .32s ease;}
-.page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  height:var(--nav-h);padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--nav);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
+}
+.brand{display:flex;flex-direction:column;align-items:center;line-height:1.15;}
+.brand-gem{font-size:1.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff;}
+.brand-sub{font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#cdd7df;margin-top:2px;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{
+  font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;
+  padding:5px 0;border-bottom:2px solid transparent;transition:all .22s;cursor:pointer;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--sky);border-bottom-color:var(--sky);}
+.lang-btn{display:flex;gap:4px;margin-left:16px;}
+.lang-btn button{
+  background:none;border:1px solid rgba(56,189,248,.25);color:var(--dim);
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+  padding:4px 8px;text-transform:uppercase;transition:all .2s;
+}
+.lang-btn button.active,.lang-btn button:hover{border-color:var(--sky);color:var(--sky);}
 
-/* ══ SECTION SHELL ══ */
-.sec{max-width:1180px;margin:0 auto;padding:88px 60px;width:100%;}
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* Mobile menu */
+.mobile-menu{
+  display:none;position:fixed;inset:var(--nav-h) 0 0 0;z-index:199;
+  background:rgba(4,12,24,.97);backdrop-filter:blur(12px);
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-size:1.15rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#fff;
+  padding:8px 0;border-bottom:2px solid transparent;transition:all .22s;cursor:pointer;
+}
+.mobile-menu a:hover,.mobile-menu a.active{color:var(--sky);border-bottom-color:var(--sky);}
+.mobile-lang{display:flex;gap:8px;margin-top:8px;}
+.mobile-lang button{
+  background:none;border:1px solid rgba(56,189,248,.25);color:var(--dim);
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;
+  padding:6px 14px;text-transform:uppercase;transition:all .2s;
+}
+.mobile-lang button.active{border-color:var(--sky);color:var(--sky);}
+
+/* ── PAGES ── */
+.page{display:none;animation:fadeIn .3s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* ── SECTION SHELL ── */
+.sec{max-width:1100px;margin:0 auto;padding:80px 32px;width:100%;}
 .slbl{
-  font-family:'DM Mono',monospace;
-  font-size:0.6rem;font-weight:500;
-  letter-spacing:0.36em;text-transform:uppercase;
-  color:var(--sky);margin-bottom:44px;
+  font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;
 }
 .stitle{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(1.8rem,2.8vw,2.6rem);
-  font-weight:400;line-height:1.18;
-  color:var(--w);margin-bottom:16px;
+  font-size:clamp(2rem,3.2vw,3rem);font-weight:400;line-height:1.15;
+  color:var(--w);margin-bottom:18px;
 }
 .stitle em{font-style:italic;color:var(--sky);}
+
+/* Princeton-style body copy — larger, more air */
 .sbody{
-  font-size:0.95rem;font-weight:300;
-  line-height:1.88;color:var(--off);max-width:62ch;
+  font-size:1.08rem;font-weight:300;line-height:1.95;
+  color:var(--off);max-width:66ch;
+  letter-spacing:.01em;
 }
 
-/* ══ HOME / HERO ══ */
-#home{
-  display:none;
-  min-height:calc(100vh - 68px - 72px); /* viewport minus nav and footer */
+/* ── HOME ── */
+#home{display:none;}
+#home.active{display:block;}
+.hero{
+  display:grid;grid-template-columns:1.15fr 0.85fr;
+  align-items:center;gap:64px;
+  max-width:1200px;margin:0 auto;
+  padding:90px 32px 70px;
+  min-height:calc(100vh - var(--nav-h) - 140px);
 }
-#home.active{
-  display:grid;
-  grid-template-columns:1.25fr 0.75fr;
-  align-items:center;
-  gap:64px;
-  max-width:1400px;
-  margin:0 auto;
-  padding:50px 10px;
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.8rem,5.5vw,5.2rem);
+  font-weight:400;line-height:1.06;color:var(--w);
+  letter-spacing:-.01em;
 }
+/* Princeton-style hero lead — much bigger */
 .hero-lead{
-  margin-top:22px;
-  font-size:1rem;font-weight:300;
-  line-height:1.85;color:var(--off);
-  max-width:40ch;
+  margin-top:26px;
+  font-size:1.22rem;font-weight:300;
+  line-height:1.9;color:var(--off);
+  max-width:48ch;
+  letter-spacing:.01em;
 }
 .hero-lead strong{color:var(--w);font-weight:500;}
-
 .cta-row{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
 .btn-p{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:14px 28px;
+  display:inline-flex;align-items:center;gap:8px;padding:14px 30px;
   background:var(--sky);color:var(--bg0);
-  font-family:'DM Mono',monospace;
-  font-size:0.68rem;font-weight:500;
-  letter-spacing:0.16em;text-transform:uppercase;
-  transition:background .2s,transform .18s;cursor:pointer;border:none;
+  font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  transition:background .2s,transform .18s;border:none;
 }
 .btn-p:hover{background:var(--sky2);transform:translateY(-1px);}
 .btn-g{
-  display:inline-flex;align-items:center;
-  padding:14px 28px;
+  display:inline-flex;align-items:center;padding:14px 30px;
   border:1px solid rgba(56,189,248,.35);color:#dceeff;
-  font-family:'DM Mono',monospace;
-  font-size:0.68rem;font-weight:500;
-  letter-spacing:0.16em;text-transform:uppercase;
-  transition:border-color .2s,color .2s;cursor:pointer;background:none;
+  font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+  transition:border-color .2s,color .2s;background:none;
 }
 .btn-g:hover{border-color:var(--sky);color:var(--sky);}
 
-/* atom */
-.atom-wrap{width:310px;height:310px;margin:auto;}
+.atom-wrap{width:280px;height:280px;margin:auto;}
 .atom-wrap svg{width:100%;height:100%;}
 
-/* metrics strip on home */
+/* metrics — clickable */
 .mstrip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg1);}
-.minner{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
-.met{padding:40px 36px;border-right:1px solid var(--line);}
+.minner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.met{
+  padding:36px 28px;border-right:1px solid var(--line);
+  cursor:pointer;transition:background .22s;
+  text-decoration:none;display:block;
+}
 .met:last-child{border-right:none;}
-.mv{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--sky);line-height:1;}
-.ml{margin-top:8px;font-family:'DM Mono',monospace;font-size:0.78rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--w);}
-.ms{margin-top:10px;font-size:1rem;line-height:1.8;font-weight:400;color:var(--off);}
+.met:hover{background:var(--bg2);}
+.mv{font-family:'DM Serif Display',serif;font-size:2.6rem;color:var(--sky);line-height:1;}
+.ml{
+  margin-top:6px;font-family:'DM Mono',monospace;
+  font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--w);
+}
+.ms{margin-top:8px;font-size:.92rem;line-height:1.75;color:var(--off);}
+.met-arrow{
+  display:inline-block;margin-top:10px;
+  font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--sky);opacity:0;transition:opacity .2s;
+}
+.met:hover .met-arrow{opacity:1;}
 
-/* ══ RESEARCH ══ */
+/* ── RESEARCH ── */
 .lines{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-.lcard{background:var(--bg1);padding:42px 32px;transition:background .22s;}
+.lcard{background:var(--bg1);padding:40px 30px;transition:background .22s;}
 .lcard:hover{background:var(--bg2);}
-.lbar{width:26px;height:2px;background:var(--sky);margin-bottom:18px;opacity:.7;}
-.lt{font-family:'DM Serif Display',serif;font-size:1.08rem;line-height:1.26;margin-bottom:12px;color:var(--w);}
-.lb{font-size:0.85rem;font-weight:300;line-height:1.8;color:var(--off);}
+.lbar{width:24px;height:2px;background:var(--sky);margin-bottom:18px;opacity:.7;}
+/* Princeton card titles */
+.lt{font-family:'DM Serif Display',serif;font-size:1.18rem;line-height:1.28;margin-bottom:12px;color:var(--w);}
+.lb{font-size:.96rem;font-weight:300;line-height:1.88;color:var(--off);}
 .ltags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;}
-.tag{font-family:'DM Mono',monospace;font-size:0.56rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--sky);border:1px solid rgba(56,189,248,.22);padding:3px 9px;}
+.tag{font-family:'DM Mono',monospace;font-size:.55rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);border:1px solid rgba(56,189,248,.22);padding:3px 9px;}
 
-/* ══ ABOUT ══ */
+/* tools grid */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+.tool{background:var(--bg1);padding:22px 20px;transition:background .22s;display:block;text-decoration:none;}
+.tool:hover{background:var(--bg2);}
+.tn{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;letter-spacing:.08em;color:var(--sky);}
+.td{font-size:.82rem;font-weight:300;color:var(--dim);margin-top:4px;line-height:1.5;}
+.tool-ext{font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(56,189,248,.45);margin-top:6px;letter-spacing:.1em;}
+
+/* ── ABOUT ── */
 .agrid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:72px;align-items:start;}
 .itable{display:flex;flex-direction:column;}
-.ir{display:grid;grid-template-columns:0.78fr 1.4fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
+.ir{display:grid;grid-template-columns:.75fr 1.4fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);}
 .ir:last-child{border-bottom:none;}
-.irk{font-family:'DM Mono',monospace;font-size:0.57rem;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky2);padding-top:2px;}
-.irv{font-size:0.85rem;font-weight:400;color:var(--off);line-height:1.6;}
+.irk{font-family:'DM Mono',monospace;font-size:.57rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sky2);padding-top:3px;}
+.irv{font-size:.9rem;font-weight:400;color:var(--off);line-height:1.65;}
 .objlist{display:flex;flex-direction:column;margin-top:40px;}
 .obj{display:flex;gap:15px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line);}
 .obj:last-child{border-bottom:none;}
-.odot{width:5px;height:5px;border-radius:50%;background:var(--sky);flex-shrink:0;margin-top:10px;}
-.ot{font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off);}
+.odot{width:5px;height:5px;border-radius:50%;background:var(--sky);flex-shrink:0;margin-top:12px;}
+.ot{font-size:.98rem;font-weight:300;line-height:1.85;color:var(--off);}
 .ot strong{color:var(--w);font-weight:500;}
 
-/* ══ TOOLS ══ */
-.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
-.tool{background:var(--bg1);padding:24px 22px;transition:background .22s;}
-.tool:hover{background:var(--bg2);}
-.tn{font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;color:var(--sky);}
-.td{font-size:0.78rem;font-weight:300;color:var(--dim);margin-top:4px;}
+/* ── TEAM ── */
+.picard{
+  display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;
+  border:1px solid var(--line);padding:30px;background:var(--bg1);max-width:520px;
+}
+.piav{
+  width:66px;height:66px;border-radius:50%;
+  background:var(--bg2);border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--sky);flex-shrink:0;
+}
+.pirole{font-family:'DM Mono',monospace;font-size:.55rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-bottom:6px;}
+.piname{font-family:'DM Serif Display',serif;font-size:1.18rem;color:var(--w);margin-bottom:5px;}
+.pidept{font-size:.88rem;font-weight:300;color:var(--off);line-height:1.65;}
+.pispec{margin-top:9px;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);}
 
-/* ══ TEAM ══ */
-.picard{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;border:1px solid var(--line);padding:34px;background:var(--bg1);max-width:540px;}
-.piav{width:68px;height:68px;border-radius:50%;background:var(--bg2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--sky);}
-.pirole{font-family:'DM Mono',monospace;font-size:0.56rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--sky);margin-bottom:7px;}
-.piname{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--w);margin-bottom:5px;}
-.pidept{font-size:0.83rem;font-weight:300;color:var(--off);line-height:1.6;}
-.pispec{margin-top:9px;font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;color:var(--dim);}
-.tnote{margin-top:22px;font-size:0.88rem;font-weight:300;color:var(--dim);font-style:italic;}
-.tnote a{color:var(--sky);text-decoration:underline;text-underline-offset:3px;}
+.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:14px;}
+.mcard{background:var(--bg1);padding:26px 22px;transition:background .22s;}
+.mcard:hover{background:var(--bg2);}
+.mav{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--bg2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:1rem;color:var(--sky);margin-bottom:14px;
+}
+.mname{font-size:.95rem;font-weight:600;color:var(--w);margin-bottom:3px;}
+.mrole{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:7px;}
+.marea{font-size:.85rem;font-weight:300;color:var(--off);line-height:1.65;}
 
-/* ══ PUBLICATIONS ══ */
+/* Join box */
+.join-box{
+  margin-top:52px;border:1px solid rgba(56,189,248,.2);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  padding:40px 36px;max-width:700px;
+}
+.join-box h3{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--w);margin-bottom:12px;}
+.join-box p{font-size:1rem;font-weight:300;line-height:1.9;color:var(--off);margin-bottom:22px;max-width:54ch;}
+.join-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:26px;}
+.join-perk{display:flex;gap:11px;align-items:flex-start;font-size:.9rem;color:var(--off);font-weight:300;line-height:1.7;}
+.jp-dot{color:var(--sky);font-size:.7rem;margin-top:5px;flex-shrink:0;}
+
+/* ── PUBLICATIONS ── */
 .publist{display:flex;flex-direction:column;}
 .pub{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:28px 0;border-bottom:1px solid var(--line);}
 .pub:first-child{padding-top:0;}
 .pub:last-child{border-bottom:none;}
-.pyr{font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:400;color:var(--sky);padding-top:3px;}
-.ptitle{font-family:'DM Serif Display',serif;font-size:1rem;line-height:1.38;margin-bottom:6px;color:var(--w);}
-.pauth{font-size:0.82rem;font-weight:400;color:var(--off);margin-bottom:4px;}
-.pjrn{font-family:'DM Mono',monospace;font-size:0.59rem;color:var(--sky2);margin-bottom:8px;}
-.pstat{display:inline-block;font-family:'DM Mono',monospace;font-size:0.54rem;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);border:1px solid rgba(56,189,248,.26);padding:3px 9px;}
+.pyr{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--sky);padding-top:4px;}
+.ptitle{font-family:'DM Serif Display',serif;font-size:1.08rem;line-height:1.38;margin-bottom:7px;color:var(--w);}
+.pauth{font-size:.88rem;color:var(--off);margin-bottom:4px;}
+.pjrn{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--sky2);margin-bottom:9px;}
+.pstat{display:inline-block;font-family:'DM Mono',monospace;font-size:.54rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);border:1px solid rgba(56,189,248,.26);padding:3px 9px;}
 
-/* ══ FOOTER — always visible ══ */
-footer{
-  position:relative;
-  z-index:1;
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);max-width:700px;}
+.cblock{background:var(--bg1);padding:34px 30px;}
+.cname{font-family:'DM Serif Display',serif;font-size:1.12rem;color:var(--w);margin-bottom:6px;}
+.cdept{font-size:.9rem;font-weight:300;color:var(--off);line-height:1.75;}
+.cemail{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--sky);letter-spacing:.06em;display:block;margin-top:4px;transition:color .18s;}
+.cemail:hover{color:var(--sky2);}
+.social-col{display:flex;flex-direction:column;gap:9px;margin-top:8px;}
+.social-col a{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--off);letter-spacing:.08em;transition:color .18s;}
+.social-col a:hover{color:var(--sky);}
 
-  border-top:1px solid rgba(255,255,255,.08);
-
-  background:#2b3138; /* mismo fondo que la barra superior */
-}
-
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);background:var(--nav);}
 .fin{
-  max-width:1180px;
-  margin:0 auto;
-
-  padding:42px 60px 32px;
-
-  display:flex;
-  flex-direction:column;
-
-  align-items:center;
-
-  gap:28px;
-
-  text-align:center;
+  max-width:1100px;margin:0 auto;padding:38px 32px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;
 }
-
-.socs{
-  display:flex;
-  gap:12px;
-
-  flex-wrap:wrap;
-
-  justify-content:center;
-}
-
+.socs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 .sl{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  padding:11px 20px;
-
-  border:1px solid rgba(255,255,255,.10);
-
-  color:#ffffff;
-
-  font-family:'DM Sans',sans-serif;
-
-  font-size:0.82rem;
-
-  font-weight:600;
-
-  letter-spacing:0.10em;
-
-  text-transform:uppercase;
-
-  transition:all .25s ease;
+  display:flex;align-items:center;gap:8px;padding:10px 18px;
+  border:1px solid rgba(255,255,255,.10);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;transition:all .22s;
 }
+.sl svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
+.sl:hover{border-color:var(--sky);color:var(--sky);background:rgba(56,189,248,.08);}
+.fcopy{font-size:.82rem;color:#d2d9e0;letter-spacing:.03em;}
 
-.sl svg{
-  width:14px;
-  height:14px;
-
-  fill:currentColor;
-
-  flex-shrink:0;
-}
-
-.sl:hover{
-  border-color:var(--sky);
-
-  color:var(--sky);
-
-  background:rgba(56,189,248,.08);
-}
-
-.fcopy{
-  font-family:'DM Sans',sans-serif;
-
-  font-size:0.85rem;
-
-  font-weight:400;
-
-  color:#d2d9e0;
-
-  letter-spacing:0.03em;
-}
-
-/* ══ RESPONSIVE ══ */
-@media(max-width:1024px){
-  #home.active{grid-template-columns:1fr;padding:56px 28px;gap:40px;}
-  .atom-wrap{display:none;}
-  nav{padding:0 24px;}
-  .sec{padding:64px 28px;}
-  .lines{grid-template-columns:1fr;}
-  .agrid{grid-template-columns:1fr;gap:44px;}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links,.lang-btn{display:none;}
+  .hamburger{display:flex;}
+  .hero{grid-template-columns:1fr;padding:52px 20px 40px;min-height:auto;gap:36px;}
+  .atom-wrap{width:200px;height:200px;}
   .minner{grid-template-columns:1fr 1fr;}
   .met:nth-child(2){border-right:none;}
   .met:nth-child(3){border-top:1px solid var(--line);}
   .met:nth-child(4){border-top:1px solid var(--line);border-right:none;}
-  .fin{padding:32px 24px 24px;}
+  .lines{grid-template-columns:1fr;}
+  .agrid{grid-template-columns:1fr;gap:44px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .picard{max-width:100%;}
+  .join-box{max-width:100%;}
+  .sec{padding:64px 20px;}
 }
-@media(max-width:600px){
-  .nav-links{gap:18px;}
-  .nav-links a{font-size:0.6rem;letter-spacing:0.12em;}
+@media(max-width:560px){
+  :root{--nav-h:64px;}
+  .brand-gem{font-size:1.3rem;}
+  .brand-sub{font-size:.58rem;}
+  .hero{padding:38px 16px 28px;}
+  .hero-title{font-size:2.4rem;}
+  .hero-lead{font-size:1.05rem;max-width:100%;}
+  .cta-row{flex-direction:column;}
+  .btn-p,.btn-g{justify-content:center;text-align:center;}
   .minner{grid-template-columns:1fr;}
-  .met{border-right:none!important;border-top:1px solid var(--line);}
+  .met{border-right:none !important;border-top:1px solid var(--line);}
   .met:first-child{border-top:none;}
-  .sl span{display:none;}.sl{padding:10px 13px;}
+  .met{padding:24px 16px;}
+  .mv{font-size:2.2rem;}
+  .sec{padding:48px 16px;}
+  .stitle{font-size:1.8rem;}
+  .members-grid{grid-template-columns:1fr 1fr;}
+  .sl span{display:none;}
+  .sl{padding:10px 13px;}
+  .tgrid{grid-template-columns:1fr 1fr;}
+  .join-box{padding:26px 18px;}
+  .picard{padding:20px;gap:14px;}
+  .piav{width:52px;height:52px;}
+  .sbody{font-size:.98rem;}
 }
-@media(prefers-reduced-motion:reduce){#bg{display:none;}}
+@media(prefers-reduced-motion:reduce){#bg{display:none;}.atom-wrap svg *{animation:none !important;}}
 </style>
 </head>
 <body>
-
 <canvas id="bg"></canvas>
-
 <div class="shell">
 
-<!-- ══ NAV ══ -->
+<!-- NAV -->
 <nav>
   <div class="brand">
     <span class="brand-gem">EULER</span>
     <span class="brand-sub">Computational Materials &amp; Energy · UNJBG</span>
   </div>
   <div class="nav-links">
-    <a onclick="show('home')" id="nav-home" class="active">Home</a>
-    <a onclick="show('research')" id="nav-research">Research</a>
-    <a onclick="show('about')" id="nav-about">About</a>
-    <a onclick="show('team')" id="nav-team">Team</a>
-    <a onclick="show('publications')" id="nav-publications">Publications</a>
-    <a onclick="show('contact')" id="nav-contact">Contact</a>
+    <a onclick="show('home')" id="nav-home" class="active" data-en="Home" data-es="Inicio">Home</a>
+    <a onclick="show('research')" id="nav-research" data-en="Research" data-es="Investigación">Research</a>
+    <a onclick="show('about')" id="nav-about" data-en="About" data-es="Nosotros">About</a>
+    <a onclick="show('team')" id="nav-team" data-en="Team" data-es="Equipo">Team</a>
+    <a onclick="show('publications')" id="nav-publications" data-en="Publications" data-es="Publicaciones">Publications</a>
+    <a onclick="show('contact')" id="nav-contact" data-en="Contact" data-es="Contacto">Contact</a>
+    <div class="lang-btn">
+      <button onclick="setLang('en')" id="btn-en" class="active">EN</button>
+      <button onclick="setLang('es')" id="btn-es">ES</button>
+    </div>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- ══ CONTENT ══ -->
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="show('home');closeMenu()" data-en="Home" data-es="Inicio">Home</a>
+  <a onclick="show('research');closeMenu()" data-en="Research" data-es="Investigación">Research</a>
+  <a onclick="show('about');closeMenu()" data-en="About" data-es="Nosotros">About</a>
+  <a onclick="show('team');closeMenu()" data-en="Team" data-es="Equipo">Team</a>
+  <a onclick="show('publications');closeMenu()" data-en="Publications" data-es="Publicaciones">Publications</a>
+  <a onclick="show('contact');closeMenu()" data-en="Contact" data-es="Contacto">Contact</a>
+  <div class="mobile-lang">
+    <button onclick="setLang('en')" id="mbtn-en" class="active">EN</button>
+    <button onclick="setLang('es')" id="mbtn-es">ES</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
 <div class="content">
 
-  <!-- HOME -->
-  <div id="home" class="page active">
-    <div style="max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:64px;padding:80px 60px;min-height:calc(100vh - 140px);">
-      <div>
-        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.6rem,5vw,5rem);font-weight:400;line-height:1.08;color:var(--w);">
-          Energy &amp; <em style="font-style:italic;color:var(--sky);">Materials</em><br>Research Group
-        </h1>
-        <p class="hero-lead">
-          First-principles simulation, machine-learning materials discovery,
-          and experimental synthesis for <strong>sustainable energy</strong>.
-        </p>
-        <div class="cta-row">
-          <button class="btn-p" onclick="show('contact')">Collaborate with us</button>
-          <button class="btn-g" onclick="show('research')">Explore research</button>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:center;">
-        <div class="atom-wrap">
-          <svg viewBox="0 0 310 310" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.28">
-              <animateTransform attributeName="transform" type="rotate" from="0 155 155" to="360 155 155" dur="13s" repeatCount="indefinite"/>
-            </ellipse>
-            <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.24" transform="rotate(60 155 155)">
-              <animateTransform attributeName="transform" type="rotate" from="60 155 155" to="420 155 155" dur="18s" repeatCount="indefinite"/>
-            </ellipse>
-            <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.20" transform="rotate(120 155 155)">
-              <animateTransform attributeName="transform" type="rotate" from="120 155 155" to="480 155 155" dur="24s" repeatCount="indefinite"/>
-            </ellipse>
-            <circle cx="155" cy="155" r="13" fill="#38bdf8" opacity="0.85">
-              <animate attributeName="r" values="11;16;11" dur="3.2s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.85;0.5;0.85" dur="3.2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="155" cy="155" r="22" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.18">
-              <animate attributeName="r" values="18;28;18" dur="3.2s" repeatCount="indefinite"/>
-            </circle>
-            <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="13s" repeatCount="indefinite" path="M 283 155 A 128 48 0 1 1 282.9 155"/></circle>
-            <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="18s" repeatCount="indefinite" path="M 155 155 m 110 -64 A 128 48 60 1 1 109 90"/></circle>
-            <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="24s" repeatCount="indefinite" path="M 155 155 m -110 -64 A 128 48 120 1 1 200 218"/></circle>
-          </svg>
-        </div>
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div>
+      <h1 class="hero-title">
+        <span data-en="Energy &amp; " data-es="Energía &amp; ">Energy &amp; </span><em style="font-style:italic;color:var(--sky);" data-en="Materials" data-es="Materiales">Materials</em><br>
+        <span data-en="Research Group" data-es="Grupo de Investigación">Research Group</span>
+      </h1>
+      <p class="hero-lead">
+        <span data-en="First-principles simulation, machine-learning materials discovery, and experimental synthesis for " data-es="Simulación de primeros principios, descubrimiento de materiales con ML y síntesis experimental para ">First-principles simulation, machine-learning materials discovery, and experimental synthesis for </span><strong data-en="sustainable energy." data-es="energía sostenible.">sustainable energy.</strong>
+      </p>
+      <div class="cta-row">
+        <button class="btn-p" onclick="show('contact')" data-en="Collaborate with us" data-es="Colabora con nosotros">Collaborate with us</button>
+        <button class="btn-g" onclick="show('research')" data-en="Explore research" data-es="Ver investigación">Explore research</button>
       </div>
     </div>
-
-    <!-- metrics -->
-    <div class="mstrip">
-      <div class="minner">
-        <div class="met"><div class="mv">5</div><div class="ml">Researchers</div><div class="ms">Physics &amp; computational science</div></div>
-        <div class="met"><div class="mv">3</div><div class="ml">Research Lines</div><div class="ms">Computational · Nano · Characterization</div></div>
-        <div class="met"><div class="mv">3+</div><div class="ml">Active Projects</div><div class="ms">DFT · ML-IAP · Thermoelectrics</div></div>
-        <div class="met"><div class="mv">SDG 7</div><div class="ml">UN Goal</div><div class="ms">Affordable and clean energy</div></div>
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <div class="atom-wrap">
+        <svg viewBox="0 0 310 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.28">
+            <animateTransform attributeName="transform" type="rotate" from="0 155 155" to="360 155 155" dur="13s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.22" transform="rotate(60 155 155)">
+            <animateTransform attributeName="transform" type="rotate" from="60 155 155" to="420 155 155" dur="18s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="155" cy="155" rx="128" ry="48" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.18" transform="rotate(120 155 155)">
+            <animateTransform attributeName="transform" type="rotate" from="120 155 155" to="480 155 155" dur="24s" repeatCount="indefinite"/>
+          </ellipse>
+          <circle cx="155" cy="155" r="13" fill="#38bdf8" opacity="0.85">
+            <animate attributeName="r" values="11;16;11" dur="3.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.85;0.5;0.85" dur="3.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="155" cy="155" r="22" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.18">
+            <animate attributeName="r" values="18;28;18" dur="3.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="13s" repeatCount="indefinite" path="M 283 155 A 128 48 0 1 1 282.9 155"/></circle>
+          <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="18s" repeatCount="indefinite" path="M 155 155 m 110 -64 A 128 48 60 1 1 109 90"/></circle>
+          <circle r="5" fill="#93d4fb" opacity="0.9"><animateMotion dur="24s" repeatCount="indefinite" path="M 155 155 m -110 -64 A 128 48 120 1 1 200 218"/></circle>
+        </svg>
       </div>
     </div>
   </div>
 
-  <!-- RESEARCH -->
-  <div id="research" class="page">
-  <div class="sec">
-    <div class="slbl">Research lines</div>
-    <h2 class="stitle">Our <em>Research</em></h2>
-    <p class="sbody" style="margin-bottom:48px;">Three integrated lines bridging theory, computation, and experiment.</p>
-    <div class="lines">
-      <div class="lcard">
-        <div class="lbar"></div>
-        <div class="lt">Materials Characterization</div>
-        <p class="lb">XRD, SEM-EDS, UV-Vis, impedance spectroscopy, and thermoelectric measurement — structural, optical, and electrical properties of synthesized compounds.</p>
-        <div class="ltags"><span class="tag">XRD</span><span class="tag">SEM-EDS</span><span class="tag">UV-Vis</span><span class="tag">Seebeck</span></div>
-      </div>
-      <div class="lcard">
-        <div class="lbar"></div>
-        <div class="lt">Nanotechnology &amp; Materials Science</div>
-        <p class="lb">Chemical synthesis of MXenes, 2D materials, and nanostructured oxides for batteries, supercapacitors, and photocatalysis applications.</p>
-        <div class="ltags"><span class="tag">MXenes</span><span class="tag">2D Materials</span><span class="tag">Nanooxides</span><span class="tag">Synthesis</span></div>
-      </div>
-      <div class="lcard">
-        <div class="lbar"></div>
-        <div class="lt">Computational Physics &amp; Modeling</div>
-        <p class="lb">First-principles DFT and ML interatomic potentials for electronic structure, lattice dynamics, and transport in thermoelectrics and solid electrolytes such as LiNbO₃.</p>
-        <div class="ltags"><span class="tag">DFT</span><span class="tag">VASP</span><span class="tag">ML-IAP</span><span class="tag">LAMMPS</span></div>
-      </div>
-    </div>
-
-    <div class="slbl" style="margin-top:64px;">Computational infrastructure</div>
-    <div class="tgrid">
-      <div class="tool"><div class="tn">VASP</div><div class="td">Ab initio DFT calculations</div></div>
-      <div class="tool"><div class="tn">Quantum ESPRESSO</div><div class="td">Electronic structure &amp; phonons</div></div>
-      <div class="tool"><div class="tn">LAMMPS</div><div class="td">Classical &amp; ML molecular dynamics</div></div>
-      <div class="tool"><div class="tn">VESTA</div><div class="td">Crystal structure visualization</div></div>
-      <div class="tool"><div class="tn">Python / ASE</div><div class="td">Simulation environment &amp; scripting</div></div>
-      <div class="tool"><div class="tn">HPC Cluster</div><div class="td">Large-scale parallel computing</div></div>
+  <!-- METRICS — all clickable -->
+  <div class="mstrip">
+    <div class="minner">
+      <a class="met" onclick="show('team')" style="cursor:pointer;">
+        <div class="mv">5</div>
+        <div class="ml" data-en="Researchers" data-es="Investigadores">Researchers</div>
+        <div class="ms" data-en="Physics &amp; computational science" data-es="Física y ciencia computacional">Physics &amp; computational science</div>
+        <div class="met-arrow" data-en="View team →" data-es="Ver equipo →">View team →</div>
+      </a>
+      <a class="met" onclick="show('research')" style="cursor:pointer;">
+        <div class="mv">3</div>
+        <div class="ml" data-en="Research Lines" data-es="Líneas de Investigación">Research Lines</div>
+        <div class="ms" data-en="Computational · Nano · Characterization" data-es="Computacional · Nano · Caracterización">Computational · Nano · Characterization</div>
+        <div class="met-arrow" data-en="Explore →" data-es="Explorar →">Explore →</div>
+      </a>
+      <a class="met" onclick="show('publications')" style="cursor:pointer;">
+        <div class="mv">3+</div>
+        <div class="ml" data-en="Active Projects" data-es="Proyectos Activos">Active Projects</div>
+        <div class="ms">DFT · ML-IAP · Thermoelectrics</div>
+        <div class="met-arrow" data-en="Publications →" data-es="Publicaciones →">Publications →</div>
+      </a>
+      <a class="met" onclick="show('research')" style="cursor:pointer;">
+        <div class="mv" style="font-size:1.8rem;padding-top:6px;">HPC</div>
+        <div class="ml" data-en="Cluster" data-es="Clúster">Cluster</div>
+        <div class="ms" data-en="High-performance parallel computing" data-es="Computación paralela de alto rendimiento">High-performance parallel computing</div>
+        <div class="met-arrow" data-en="Infrastructure →" data-es="Infraestructura →">Infrastructure →</div>
+      </a>
     </div>
   </div>
+</div>
+
+<!-- RESEARCH -->
+<div id="research" class="page">
+<div class="sec">
+  <div class="slbl" data-en="Research lines" data-es="Líneas de investigación">Research lines</div>
+  <h2 class="stitle"><span data-en="Our " data-es="Nuestra ">Our </span><em data-en="Research" data-es="Investigación">Research</em></h2>
+  <p class="sbody" style="margin-bottom:52px;" data-en="Three integrated lines bridging theory, computation, and experiment." data-es="Tres líneas integradas que unen teoría, computación y experimento.">Three integrated lines bridging theory, computation, and experiment.</p>
+  <div class="lines">
+    <div class="lcard">
+      <div class="lbar"></div>
+      <div class="lt" data-en="Materials Characterization" data-es="Caracterización de Materiales">Materials Characterization</div>
+      <p class="lb" data-en="XRD, SEM-EDS, UV-Vis, impedance spectroscopy, and thermoelectric measurement — structural, optical, and electrical properties of synthesized compounds." data-es="DRX, SEM-EDS, UV-Vis, espectroscopía de impedancia y medición termoeléctrica — propiedades estructurales, ópticas y eléctricas de los compuestos sintetizados.">XRD, SEM-EDS, UV-Vis, impedance spectroscopy, and thermoelectric measurement — structural, optical, and electrical properties of synthesized compounds.</p>
+      <div class="ltags"><span class="tag">XRD</span><span class="tag">SEM-EDS</span><span class="tag">UV-Vis</span><span class="tag">Seebeck</span></div>
+    </div>
+    <div class="lcard">
+      <div class="lbar"></div>
+      <div class="lt" data-en="Nanotechnology &amp; Materials Science" data-es="Nanotecnología y Ciencia de Materiales">Nanotechnology &amp; Materials Science</div>
+      <p class="lb" data-en="Chemical synthesis of MXenes, 2D materials, and nanostructured oxides for batteries, supercapacitors, and photocatalysis applications." data-es="Síntesis química de MXenos, materiales 2D y óxidos nanoestructurados para baterías, supercondensadores y fotocatálisis.">Chemical synthesis of MXenes, 2D materials, and nanostructured oxides for batteries, supercapacitors, and photocatalysis applications.</p>
+      <div class="ltags"><span class="tag">MXenes</span><span class="tag">2D Materials</span><span class="tag">Nanooxides</span><span class="tag">Synthesis</span></div>
+    </div>
+    <div class="lcard">
+      <div class="lbar"></div>
+      <div class="lt" data-en="Computational Physics &amp; Modeling" data-es="Física Computacional y Modelado">Computational Physics &amp; Modeling</div>
+      <p class="lb" data-en="First-principles DFT and ML interatomic potentials for electronic structure, lattice dynamics, and transport in thermoelectrics and solid electrolytes such as LiNbO₃." data-es="DFT de primeros principios y potenciales interatómicos ML para estructura electrónica, dinámica de red y transporte en termoeléctr­icos y electrolitos sólidos como LiNbO₃.">First-principles DFT and ML interatomic potentials for electronic structure, lattice dynamics, and transport in thermoelectrics and solid electrolytes such as LiNbO₃.</p>
+      <div class="ltags"><span class="tag">DFT</span><span class="tag">VASP</span><span class="tag">ML-IAP</span><span class="tag">LAMMPS</span></div>
+    </div>
   </div>
 
-  <!-- ABOUT -->
-  <div id="about" class="page">
-  <div class="sec">
-    <div class="slbl">About</div>
-    <div class="agrid">
-      <div>
-        <h2 class="stitle">Theory meets <em>experiment</em></h2>
-        <p class="sbody">
-          EULER — Grupo de Investigación Energía y Materiales — conducts
-          theoretical and experimental research on new materials for energy
-          conversion and storage. We integrate chemical synthesis,
-          advanced characterization, and high-performance DFT modeling
-          to predict physical properties and optimize energy devices.
-          Founded 2024 at UNJBG, funded by Canon Minero.
-        </p>
-        <div class="objlist">
-          <div class="obj"><div class="odot"></div><p class="ot">Develop <strong>nanomaterials</strong> for energy conversion and storage.</p></div>
-          <div class="obj"><div class="odot"></div><p class="ot">Synthesize and characterize compounds with advanced spectroscopic methods.</p></div>
-          <div class="obj"><div class="odot"></div><p class="ot">Run <strong>HPC simulations</strong> for electronic and transport properties from first principles.</p></div>
-          <div class="obj"><div class="odot"></div><p class="ot">Optimize thermoelectric ZT and ionic conductivity computationally.</p></div>
-        </div>
+  <div class="slbl" style="margin-top:68px;" data-en="Computational infrastructure" data-es="Infraestructura computacional">Computational infrastructure</div>
+  <div class="tgrid">
+    <a class="tool" href="https://www.vasp.at/" target="_blank" rel="noopener">
+      <div class="tn">VASP</div>
+      <div class="td" data-en="Ab initio DFT calculations" data-es="Cálculos DFT ab initio">Ab initio DFT calculations</div>
+      <div class="tool-ext">vasp.at ↗</div>
+    </a>
+    <a class="tool" href="https://www.quantum-espresso.org/" target="_blank" rel="noopener">
+      <div class="tn">Quantum ESPRESSO</div>
+      <div class="td" data-en="Electronic structure &amp; phonons" data-es="Estructura electrónica y fonones">Electronic structure &amp; phonons</div>
+      <div class="tool-ext">quantum-espresso.org ↗</div>
+    </a>
+    <a class="tool" href="https://www.lammps.org/" target="_blank" rel="noopener">
+      <div class="tn">LAMMPS</div>
+      <div class="td" data-en="Classical &amp; ML molecular dynamics" data-es="Dinámica molecular clásica y ML">Classical &amp; ML molecular dynamics</div>
+      <div class="tool-ext">lammps.org ↗</div>
+    </a>
+    <a class="tool" href="https://jp-minerals.org/vesta/en/" target="_blank" rel="noopener">
+      <div class="tn">VESTA</div>
+      <div class="td" data-en="Crystal structure visualization" data-es="Visualización de estructura cristalina">Crystal structure visualization</div>
+      <div class="tool-ext">jp-minerals.org ↗</div>
+    </a>
+    <a class="tool" href="https://wiki.fysik.dtu.dk/ase/" target="_blank" rel="noopener">
+      <div class="tn">Python / ASE</div>
+      <div class="td" data-en="Simulation environment &amp; scripting" data-es="Entorno de simulación y scripting">Simulation environment &amp; scripting</div>
+      <div class="tool-ext">wiki.fysik.dtu.dk ↗</div>
+    </a>
+    <a class="tool" href="https://www.top500.org/" target="_blank" rel="noopener">
+      <div class="tn">HPC Cluster</div>
+      <div class="td" data-en="Large-scale parallel computing" data-es="Computación paralela a gran escala">Large-scale parallel computing</div>
+      <div class="tool-ext">top500.org ↗</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="page">
+<div class="sec">
+  <div class="slbl" data-en="About" data-es="Acerca de">About</div>
+  <div class="agrid">
+    <div>
+      <h2 class="stitle"><span data-en="Theory meets " data-es="La teoría encuentra el ">Theory meets </span><em data-en="experiment" data-es="experimento">experiment</em></h2>
+      <p class="sbody" data-en="EULER — Grupo de Investigación Energía y Materiales — conducts theoretical and experimental research on new materials for energy conversion and storage. We integrate chemical synthesis, advanced characterization, and high-performance DFT modeling to predict physical properties and optimize energy devices. Founded 2024 at UNJBG, funded by Canon Minero." data-es="EULER — Grupo de Investigación Energía y Materiales — realiza investigación teórica y experimental sobre nuevos materiales para conversión y almacenamiento de energía. Integramos síntesis química, caracterización avanzada y modelado DFT de alto rendimiento para predecir propiedades físicas y optimizar dispositivos energéticos. Fundado en 2024 en la UNJBG, financiado por Canon Minero.">EULER — Grupo de Investigación Energía y Materiales — conducts theoretical and experimental research on new materials for energy conversion and storage. We integrate chemical synthesis, advanced characterization, and high-performance DFT modeling to predict physical properties and optimize energy devices. Founded 2024 at UNJBG, funded by Canon Minero.</p>
+      <div class="objlist">
+        <div class="obj"><div class="odot"></div><p class="ot"><span data-en="Develop " data-es="Desarrollar ">Develop </span><strong data-en="nanomaterials" data-es="nanomateriales">nanomaterials</strong><span data-en=" for energy conversion and storage." data-es=" para conversión y almacenamiento de energía."> for energy conversion and storage.</span></p></div>
+        <div class="obj"><div class="odot"></div><p class="ot" data-en="Synthesize and characterize compounds with advanced spectroscopic methods." data-es="Sintetizar y caracterizar compuestos con métodos espectroscópicos avanzados.">Synthesize and characterize compounds with advanced spectroscopic methods.</p></div>
+        <div class="obj"><div class="odot"></div><p class="ot"><span data-en="Run " data-es="Ejecutar ">Run </span><strong data-en="HPC simulations" data-es="simulaciones HPC">HPC simulations</strong><span data-en=" for electronic and transport properties from first principles." data-es=" para propiedades electrónicas y de transporte desde primeros principios."> for electronic and transport properties from first principles.</span></p></div>
+        <div class="obj"><div class="odot"></div><p class="ot" data-en="Optimize thermoelectric ZT and ionic conductivity computationally." data-es="Optimizar el ZT termoeléctrico y la conductividad iónica computacionalmente.">Optimize thermoelectric ZT and ionic conductivity computationally.</p></div>
       </div>
-      <div>
-        <div class="slbl" style="margin-bottom:20px;">Group identity</div>
-        <div class="itable">
-          <div class="ir"><span class="irk">Name</span><span class="irv">Grupo de Investigación Energía y Materiales (GEM)</span></div>
-          <div class="ir"><span class="irk">Institution</span><span class="irv">Universidad Nacional Jorge Basadre Grohmann</span></div>
-          <div class="ir"><span class="irk">Faculty</span><span class="irv">Faculty of Sciences — Dept. of Physics</span></div>
-          <div class="ir"><span class="irk">PI</span><span class="irv">Dr. Efracio Mamani Flores</span></div>
-          <div class="ir"><span class="irk">Founded</span><span class="irv">April 25, 2024</span></div>
-          <div class="ir"><span class="irk">Registry</span><span class="irv">Res. Vicerrectoral N° 038-2024-VIIN</span></div>
-          <div class="ir"><span class="irk">Funding</span><span class="irv">Canon Minero · UNJBG</span></div>
-          <div class="ir"><span class="irk">Area</span><span class="irv">Solid State Physics · Condensed Matter</span></div>
-          <div class="ir"><span class="irk">SDG</span><span class="irv">SDG 7 — Affordable and Clean Energy</span></div>
-        </div>
+    </div>
+    <div>
+      <div class="slbl" style="margin-bottom:18px;" data-en="Group identity" data-es="Identidad del grupo">Group identity</div>
+      <div class="itable">
+        <div class="ir"><span class="irk" data-en="Name" data-es="Nombre">Name</span><span class="irv">Grupo de Investigación Energía y Materiales (GEM)</span></div>
+        <div class="ir"><span class="irk" data-en="Institution" data-es="Institución">Institution</span><span class="irv">Universidad Nacional Jorge Basadre Grohmann</span></div>
+        <div class="ir"><span class="irk" data-en="Faculty" data-es="Facultad">Faculty</span><span class="irv" data-en="Faculty of Sciences — Dept. of Physics" data-es="Facultad de Ciencias — Dept. de Física">Faculty of Sciences — Dept. of Physics</span></div>
+        <div class="ir"><span class="irk">PI</span><span class="irv">Dr. Efracio Mamani Flores</span></div>
+        <div class="ir"><span class="irk" data-en="Founded" data-es="Fundación">Founded</span><span class="irv" data-en="April 25, 2024" data-es="25 de abril de 2024">April 25, 2024</span></div>
+        <div class="ir"><span class="irk" data-en="Registry" data-es="Registro">Registry</span><span class="irv">Res. Vicerrectoral N° 038-2024-VIIN</span></div>
+        <div class="ir"><span class="irk" data-en="Funding" data-es="Financiamiento">Funding</span><span class="irv">Canon Minero · UNJBG</span></div>
+        <div class="ir"><span class="irk" data-en="Area" data-es="Área">Area</span><span class="irv" data-en="Solid State Physics · Condensed Matter" data-es="Física del Estado Sólido · Materia Condensada">Solid State Physics · Condensed Matter</span></div>
+        <div class="ir"><span class="irk">SDG</span><span class="irv" data-en="SDG 7 — Affordable and Clean Energy" data-es="ODS 7 — Energía asequible y no contaminante">SDG 7 — Affordable and Clean Energy</span></div>
       </div>
     </div>
   </div>
-  </div>
+</div>
+</div>
 
-  <!-- TEAM -->
-  <div id="team" class="page">
-  <div class="sec">
-    <div class="slbl">Team</div>
-    <h2 class="stitle">Principal <em>Investigator</em></h2>
+<!-- TEAM -->
+<div id="team" class="page">
+<div class="sec">
+  <div class="slbl" data-en="Team" data-es="Equipo">Team</div>
+  <h2 class="stitle"><span data-en="Principal " data-es="Investigador ">Principal </span><em data-en="Investigator" data-es="Principal">Investigator</em></h2>
+  <div style="margin-bottom:52px;">
     <div class="picard">
       <div class="piav">E</div>
       <div>
-        <div class="pirole">Principal Investigator</div>
+        <div class="pirole" data-en="Principal Investigator" data-es="Investigador Principal">Principal Investigator</div>
         <div class="piname">Dr. Efracio Mamani Flores</div>
-        <div class="pidept">Dept. of Physics · Faculty of Sciences<br>UNJBG — Tacna, Peru</div>
+        <div class="pidept" data-en="Dept. of Physics · Faculty of Sciences<br>UNJBG — Tacna, Peru" data-es="Dept. de Física · Facultad de Ciencias<br>UNJBG — Tacna, Perú">Dept. of Physics · Faculty of Sciences<br>UNJBG — Tacna, Peru</div>
         <div class="pispec">DFT · Thermoelectrics · Condensed Matter · Solid-State Physics</div>
       </div>
     </div>
-    <p class="tnote" style="margin-top:28px;">Interested in joining GEM? <a href="mailto:emamanif@unjbg.edu.pe">Contact us.</a></p>
-  </div>
   </div>
 
-  <!-- PUBLICATIONS -->
-  <div id="publications" class="page">
-  <div class="sec">
-    <div class="slbl">Publications</div>
-    <h2 class="stitle">Research <em>Output</em></h2>
-    <p class="sbody" style="margin-bottom:48px;">Peer-reviewed articles will appear here as they are published.</p>
-    <div class="publist">
-      <div class="pub">
-        <div class="pyr">2025</div>
-        <div>
-          <div class="ptitle">Development of New Thermoelectric Materials for Energy Conversion: A Theoretical and Experimental Approach</div>
-          <div class="pauth">Mamani Flores, E. et al. — GEM, UNJBG</div>
-          <div class="pjrn">Canon Minero Research Project · UNJBG, Tacna</div>
-          <span class="pstat">In progress</span>
-        </div>
+  <div class="slbl" data-en="Research Members" data-es="Miembros del Grupo">Research Members</div>
+  <div class="members-grid">
+    <div class="mcard">
+      <div class="mav">R</div>
+      <div class="mname">Researcher 2</div>
+      <div class="mrole" data-en="Co-Investigator" data-es="Co-Investigador">Co-Investigator</div>
+      <div class="marea" data-en="Experimental synthesis · Nanomaterials" data-es="Síntesis experimental · Nanomateriales">Experimental synthesis · Nanomaterials</div>
+    </div>
+    <div class="mcard">
+      <div class="mav">R</div>
+      <div class="mname">Researcher 3</div>
+      <div class="mrole" data-en="Co-Investigator" data-es="Co-Investigador">Co-Investigador</div>
+      <div class="marea" data-en="Characterization · XRD · SEM" data-es="Caracterización · DRX · SEM">Characterization · XRD · SEM</div>
+    </div>
+    <div class="mcard">
+      <div class="mav">R</div>
+      <div class="mname">Researcher 4</div>
+      <div class="mrole" data-en="Graduate Researcher" data-es="Investigador Posgrado">Graduate Researcher</div>
+      <div class="marea">ML-IAP · LAMMPS · Python</div>
+    </div>
+    <div class="mcard">
+      <div class="mav">R</div>
+      <div class="mname">Researcher 5</div>
+      <div class="mrole" data-en="Graduate Researcher" data-es="Investigador Posgrado">Graduate Researcher</div>
+      <div class="marea">DFT · VASP · Thermoelectrics</div>
+    </div>
+  </div>
+
+  <!-- JOIN US -->
+  <div class="join-box">
+    <h3 data-en="Join EULER" data-es="Únete a EULER">Join EULER</h3>
+    <p data-en="We are actively recruiting motivated researchers — undergraduate, graduate, and postdoctoral — interested in computational physics, materials science, and sustainable energy." data-es="Estamos reclutando investigadores motivados — pregrado, posgrado y postdoctorado — interesados en física computacional, ciencia de materiales y energía sostenible.">We are actively recruiting motivated researchers — undergraduate, graduate, and postdoctoral — interested in computational physics, materials science, and sustainable energy.</p>
+    <div class="join-perks">
+      <div class="join-perk"><span class="jp-dot">◆</span><span data-en="Access to HPC cluster and licensed simulation software (VASP, Quantum ESPRESSO)" data-es="Acceso a clúster HPC y software de simulación licenciado (VASP, Quantum ESPRESSO)">Access to HPC cluster and licensed simulation software (VASP, Quantum ESPRESSO)</span></div>
+      <div class="join-perk"><span class="jp-dot">◆</span><span data-en="Training in DFT, ML-IAP, and experimental characterization techniques" data-es="Capacitación en DFT, ML-IAP y técnicas de caracterización experimental">Training in DFT, ML-IAP, and experimental characterization techniques</span></div>
+      <div class="join-perk"><span class="jp-dot">◆</span><span data-en="Opportunity to co-author international publications" data-es="Oportunidad de coautoría en publicaciones internacionales">Opportunity to co-author international publications</span></div>
+      <div class="join-perk"><span class="jp-dot">◆</span><span data-en="Collaboration with national and international research networks" data-es="Colaboración con redes de investigación nacionales e internacionales">Collaboration with national and international research networks</span></div>
+    </div>
+    <a class="btn-p" href="mailto:dnmt@unjbg.edu.pe?subject=Application%20to%20join%20EULER%20Research%20Group" data-en="Apply to join →" data-es="Postula aquí →">Apply to join →</a>
+  </div>
+</div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div id="publications" class="page">
+<div class="sec">
+  <div class="slbl" data-en="Publications" data-es="Publicaciones">Publications</div>
+  <h2 class="stitle"><span data-en="Research " data-es="Producción ">Research </span><em data-en="Output" data-es="Científica">Output</em></h2>
+  <p class="sbody" style="margin-bottom:48px;" data-en="Peer-reviewed articles will appear here as they are published." data-es="Los artículos revisados por pares aparecerán aquí conforme se publiquen.">Peer-reviewed articles will appear here as they are published.</p>
+  <div class="publist">
+    <div class="pub">
+      <div class="pyr">2025</div>
+      <div>
+        <div class="ptitle">Development of New Thermoelectric Materials for Energy Conversion: A Theoretical and Experimental Approach</div>
+        <div class="pauth">Mamani Flores, E. et al. — GEM, UNJBG</div>
+        <div class="pjrn">Canon Minero Research Project · UNJBG, Tacna</div>
+        <span class="pstat" data-en="In progress" data-es="En progreso">In progress</span>
       </div>
-      <div class="pub">
-        <div class="pyr">2025</div>
-        <div>
-          <div class="ptitle">Electronic Structure and Transport Properties of LiNbO₃ via Density Functional Theory</div>
-          <div class="pauth">GEM Research Group · UNJBG</div>
-          <div class="pjrn">Journal of Physics: Condensed Matter · in preparation</div>
-          <span class="pstat">In preparation</span>
-        </div>
+    </div>
+    <div class="pub">
+      <div class="pyr">2025</div>
+      <div>
+        <div class="ptitle">Electronic Structure and Transport Properties of LiNbO₃ via Density Functional Theory</div>
+        <div class="pauth">GEM Research Group · UNJBG</div>
+        <div class="pjrn">Journal of Physics: Condensed Matter · <span data-en="in preparation" data-es="en preparación">in preparation</span></div>
+        <span class="pstat" data-en="In preparation" data-es="En preparación">In preparation</span>
       </div>
-      <div class="pub">
-        <div class="pyr">2025</div>
-        <div>
-          <div class="ptitle">Machine-Learning Interatomic Potentials for Solid-State Electrolytes</div>
-          <div class="pauth">EULER Research Group · UNJBG</div>
-          <div class="pjrn">Computational Materials Science · in preparation</div>
-          <span class="pstat">In preparation</span>
-        </div>
+    </div>
+    <div class="pub">
+      <div class="pyr">2025</div>
+      <div>
+        <div class="ptitle">Machine-Learning Interatomic Potentials for Solid-State Electrolytes</div>
+        <div class="pauth">EULER Research Group · UNJBG</div>
+        <div class="pjrn">Computational Materials Science · <span data-en="in preparation" data-es="en preparación">in preparation</span></div>
+        <span class="pstat" data-en="In preparation" data-es="En preparación">In preparation</span>
       </div>
     </div>
   </div>
-  </div>
+</div>
+</div>
 
-  <!-- CONTACT -->
-  <div id="contact" class="page">
-  <div class="sec">
-    <div class="slbl">Contact</div>
-    <h2 class="stitle">Get in <em>Touch</em></h2>
-    <p class="sbody" style="margin-bottom:52px;">
-      We welcome collaborations with researchers, institutions, and industry partners
-      working on sustainable energy and advanced materials.
-    </p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);max-width:700px;">
-      <div style="background:var(--bg1);padding:36px 32px;">
-        <div class="slbl" style="margin-bottom:16px;">Principal Investigator</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--w);margin-bottom:6px;">Dr. Efracio Mamani Flores</div>
-        <div style="font-size:0.85rem;font-weight:300;color:var(--off);line-height:1.7;">
-          Dept. of Physics · Faculty of Sciences<br>
-          Universidad Nacional Jorge Basadre Grohmann<br>
-          Tacna, Peru
-        </div>
-      </div>
-      <div style="background:var(--bg1);padding:36px 32px;">
-        <div class="slbl" style="margin-bottom:16px;">Email</div>
-        <a href="mailto:emamanif@unjbg.edu.pe" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--sky);letter-spacing:0.06em;">emamanif@unjbg.edu.pe</a>
-        <div style="margin-top:24px;">
-          <div class="slbl" style="margin-bottom:12px;">Social</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="https://facebook.com/gem.unjbg" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--off);letter-spacing:0.08em;transition:color .18s;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color=''">→ Facebook</a>
-            <a href="https://instagram.com/gem.unjbg" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--off);letter-spacing:0.08em;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color=''">→ Instagram</a>
-            <a href="https://x.com/gem_unjbg" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--off);letter-spacing:0.08em;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color=''">→ X / Twitter</a>
-            <a href="https://wa.me/51999999999" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--off);letter-spacing:0.08em;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color=''">→ WhatsApp</a>
-          </div>
-        </div>
+<!-- CONTACT -->
+<div id="contact" class="page">
+<div class="sec">
+  <div class="slbl" data-en="Contact" data-es="Contacto">Contact</div>
+  <h2 class="stitle"><span data-en="Get in " data-es="Ponte en ">Get in </span><em data-en="Touch" data-es="Contacto">Touch</em></h2>
+  <p class="sbody" style="margin-bottom:48px;" data-en="We welcome collaborations with researchers, institutions, and industry partners working on sustainable energy and advanced materials." data-es="Bienvenemos colaboraciones con investigadores, instituciones y socios industriales que trabajen en energía sostenible y materiales avanzados.">We welcome collaborations with researchers, institutions, and industry partners working on sustainable energy and advanced materials.</p>
+  <div class="contact-grid">
+    <div class="cblock">
+      <div class="slbl" style="margin-bottom:12px;" data-en="Principal Investigator" data-es="Investigador Principal">Principal Investigator</div>
+      <div class="cname">Dr. Efracio Mamani Flores</div>
+      <div class="cdept" data-en="Dept. of Physics · Faculty of Sciences<br>Universidad Nacional Jorge Basadre Grohmann<br>Tacna, Peru" data-es="Dept. de Física · Facultad de Ciencias<br>Universidad Nacional Jorge Basadre Grohmann<br>Tacna, Perú">Dept. of Physics · Faculty of Sciences<br>Universidad Nacional Jorge Basadre Grohmann<br>Tacna, Peru</div>
+    </div>
+    <div class="cblock">
+      <div class="slbl" style="margin-bottom:8px;">Email</div>
+      <a class="cemail" href="mailto:emamanif@unjbg.edu.pe">emamanif@unjbg.edu.pe</a>
+      <div class="slbl" style="margin-top:22px;margin-bottom:8px;">Social</div>
+      <div class="social-col">
+        <a href="https://facebook.com/gem.unjbg" target="_blank" rel="noopener">→ Facebook</a>
+        <a href="https://instagram.com/gem.unjbg" target="_blank" rel="noopener">→ Instagram</a>
+        <a href="https://x.com/gem_unjbg" target="_blank" rel="noopener">→ X / Twitter</a>
+        <a href="https://youtube.com/@gem_unjbg" target="_blank" rel="noopener">→ YouTube</a>
       </div>
     </div>
   </div>
-  </div>
+</div>
+</div>
 
 </div><!-- /content -->
 
-<!-- ══ FOOTER — always visible ══ -->
+<!-- FOOTER -->
 <footer>
   <div class="fin">
     <div class="socs">
@@ -643,9 +700,9 @@ footer{
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         <span>X / Twitter</span>
       </a>
-      <a class="sl" href="https://wa.me/51999999999" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.149.347-.347.521-.521.173-.198.297-.347.446-.595.149-.297.025-.521-.025-.67-.05-.149-.694-1.676-.93-2.296-.198-.495-.405-.43-.595-.435h-.546c-.198 0-.521.074-.793.372-.273.297-1.044 1.022-1.044 2.487 0 1.464 1.069 2.875 1.218 3.075.149.198 2.066 3.165 5.005 4.31 2.94 1.146 2.94.763 3.47.717.531-.05 1.758-.717 2.005-1.413.248-.694.248-1.29.173-1.414-.074-.124-.297-.198-.594-.347zm-5.421 7.398h-.004a9.87 9.87 0 0 1-5.031-1.378l-.36-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.508-5.245C2.17 6.252 6.532 1.89 12.06 1.89c2.628 0 5.097 1.024 6.95 2.879a9.78 9.78 0 0 1 2.876 6.947c-.001 5.529-4.494 10.064-9.835 10.064zm8.413-18.484C18.24 1.066 15.224 0 12.052 0 5.495 0 .163 5.335.165 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.9 11.9 0 0 0 5.741 1.464h.005c6.554 0 11.89-5.336 11.892-11.893a11.82 11.82 0 0 0-3.483-8.42z"/></svg>
-        <span>WhatsApp</span>
+      <a class="sl" href="https://youtube.com/@gem_unjbg" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span>YouTube</span>
       </a>
       <a class="sl" href="mailto:emamanif@unjbg.edu.pe">
         <svg viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm19.385 2.077-8.46 5.638a2 2 0 0 1-2.222 0L2.243 6.077A1 1 0 0 0 2 7v11h20V7a1 1 0 0 0-.615-.923zM4.434 5l7.566 5.044L19.566 5z"/></svg>
@@ -659,42 +716,65 @@ footer{
 </div><!-- /shell -->
 
 <script>
-  
-/* ── SPA navigation ── */
+/* ── SPA ── */
 function show(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.mobile-menu a').forEach(a=>a.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  const navEl = document.getElementById('nav-'+id);
-  if(navEl) navEl.classList.add('active');
+  const n=document.getElementById('nav-'+id);
+  if(n) n.classList.add('active');
+  document.querySelectorAll('.mobile-menu a').forEach(a=>{
+    if(a.getAttribute('onclick')&&a.getAttribute('onclick').includes("'"+id+"'")) a.classList.add('active');
+  });
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ── Particle background ── */
+/* ── Mobile menu ── */
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  const mm=document.getElementById('mobile-menu');
+  mm.classList.toggle('open');
+  document.body.style.overflow=mm.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ── Language ── */
+function setLang(lang){
+  ['en','es'].forEach(l=>{
+    const b=document.getElementById('btn-'+l);
+    const mb=document.getElementById('mbtn-'+l);
+    if(b) b.classList.toggle('active',l===lang);
+    if(mb) mb.classList.toggle('active',l===lang);
+  });
+  document.querySelectorAll('[data-'+lang+']').forEach(el=>{
+    el.innerHTML=el.getAttribute('data-'+lang);
+  });
+}
+
+/* ── Particles ── */
 const cv=document.getElementById('bg'),cx=cv.getContext('2d');
 let W,H,pts;
-const N=50,C=[56,189,248];
-
+const N=45,C='56,189,248';
 function resize(){
-  W=cv.width=window.innerWidth;
-  H=cv.height=window.innerHeight;
-  const cols=Math.ceil(Math.sqrt(N*W/H));
-  const rows=Math.ceil(N/cols);
+  W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;
+  const cols=Math.ceil(Math.sqrt(N*W/H)),rows=Math.ceil(N/cols);
   pts=Array.from({length:N},(_,i)=>({
     x:(i%cols+.5)/cols*W+(Math.random()-.5)*W/cols*.85,
     y:(Math.floor(i/cols)+.5)/rows*H+(Math.random()-.5)*H/rows*.85,
-    vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,
-    r:.6+Math.random()*1.1,ph:Math.random()*Math.PI*2,sp:.5+Math.random()*.8
+    vx:(Math.random()-.5)*.1,vy:(Math.random()-.5)*.1,
+    r:.5+Math.random()*1,ph:Math.random()*Math.PI*2,sp:.5+Math.random()*.8
   }));
 }
-
 function draw(t){
   cx.clearRect(0,0,W,H);
-  // vignette
   const g=cx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.72);
-  g.addColorStop(0,'rgba(56,189,248,0.022)');g.addColorStop(1,'rgba(4,12,24,0)');
+  g.addColorStop(0,'rgba(56,189,248,0.018)');g.addColorStop(1,'rgba(4,12,24,0)');
   cx.fillStyle=g;cx.fillRect(0,0,W,H);
-
   pts.forEach(p=>{
     p.x+=p.vx;p.y+=p.vy;
     if(p.x<-20)p.x=W+20;if(p.x>W+20)p.x=-20;
@@ -702,19 +782,14 @@ function draw(t){
   });
   for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
     const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-    if(d<148){
-      cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
-      cx.strokeStyle=`rgba(${C},${(1-d/148)*.08})`;cx.lineWidth=.75;cx.stroke();
-    }
+    if(d<140){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(${C},${(1-d/140)*.07})`;cx.lineWidth=.7;cx.stroke();}
   }
   pts.forEach(p=>{
-    const pulse=.5+.5*Math.sin(t*.001*p.sp+p.ph);
-    const r=p.r+pulse*.9;
-    const gl=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*4.5);
-    gl.addColorStop(0,`rgba(${C},${.1+.2*pulse})`);gl.addColorStop(1,`rgba(${C},0)`);
-    cx.beginPath();cx.arc(p.x,p.y,r*4.5,0,Math.PI*2);cx.fillStyle=gl;cx.fill();
-    cx.beginPath();cx.arc(p.x,p.y,r,0,Math.PI*2);
-    cx.fillStyle=`rgba(${C},${.28+.38*pulse})`;cx.fill();
+    const pulse=.5+.5*Math.sin(t*.001*p.sp+p.ph),r=p.r+pulse*.8;
+    const gl=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*4);
+    gl.addColorStop(0,`rgba(${C},${.08+.18*pulse})`);gl.addColorStop(1,`rgba(${C},0)`);
+    cx.beginPath();cx.arc(p.x,p.y,r*4,0,Math.PI*2);cx.fillStyle=gl;cx.fill();
+    cx.beginPath();cx.arc(p.x,p.y,r,0,Math.PI*2);cx.fillStyle=`rgba(${C},${.25+.35*pulse})`;cx.fill();
   });
   requestAnimationFrame(draw);
 }
